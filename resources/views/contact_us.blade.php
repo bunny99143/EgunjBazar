@@ -119,9 +119,19 @@ input[type=submit]:hover {
                     </li>
                 </ul>
                 <!-- Button -->
-                <a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="{{ route('login') }}">
-                    Login - Sign Up
-                </a>
+                @isset (auth()->user()->id)
+				<a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" data-toggle="modal" data-target="#cart_modal" type="button"  href="#" onclick="return feelCart_data();">
+					My Carts
+					<span class="badge notification-active" id="cart_items">{{ \App\Cart::where('user_id',auth()->user()->id)->count() }}</span>
+				</a>
+				<a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="{{ url('login')}}">
+					My Orders
+				</a>
+				@else
+				<a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="{{ url('login')}}">
+					Login - Sign Up
+				</a>
+				@endisset
                 <!-- Mobile button -->
                 <div class="d-lg-none text-center">
                     <a href="https://webpixels.io/themes/quick-website-ui-kit" class="btn btn-block btn-sm btn-warning">See more details</a>
@@ -182,6 +192,24 @@ input[type=submit]:hover {
 				</div>
 			</div>
             </div>
+            <div class="modal fade" id="cart_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel">My Cart</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  </div>
+                  <div class="modal-body">
+                    <div id="model_cart_data">
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Order Place</button>
+                  </div>
+                </div>
+              </div>
+            </div>
             <script src="{{ asset('site/vendors/scripts/core.js') }}"></script>
 	<script src="{{ asset('site/vendors/scripts/script.min.js') }}"></script>
 	<script src="{{ asset('site/vendors/scripts/process.js') }}"></script>
@@ -189,7 +217,25 @@ input[type=submit]:hover {
     <script src="{{ asset('site/src/plugins/slick/slick.min.js') }}"></script>
 	<!-- bootstrap-touchspin js -->
 	<script src="{{ asset('site/src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js') }}"></script>
+  <script>
+    function feelCart_data(){
+
+        $.ajax(
+        {
+            url: "/get_to_cart",
+            type: 'GET',
+            success: function (response){
+                if(response.status==0){
+                    $("#model_cart_data").empty().html('<p>Cart is empty.</p>');
+                }else{
+                    $("#model_cart_data").empty().html(response);
+                }					
+            }
+        });
+        }   
+</script>
 	<script>
+     
 		jQuery(document).ready(function() {
 		// 	jQuery('.product-slider').slick({
 		// 		slidesToShow: 1,

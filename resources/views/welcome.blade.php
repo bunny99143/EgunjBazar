@@ -115,9 +115,21 @@
                     </li>
                 </ul>
                 <!-- Button -->
-                <a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="login">
-                    Login - Sign Up
-                </a>
+                
+                @isset (auth()->user()->id)
+				{{-- <a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" data-toggle="modal" data-target="#cart_modal" type="button"  href="#" onclick="return feelCart_data();">
+					My Carts
+					<span class="badge notification-active" id="cart_items">{{ \App\Cart::where('user_id',auth()->user()->id)->count() }}</span>
+				</a> --}}
+				<a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="{{ url('login')}}">
+					My Orders
+				</a>
+				@else
+				<a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="{{ url('login')}}">
+					Login - Sign Up
+				</a>
+				@endisset
+               
                 <!-- Mobile button -->
                 <div class="d-lg-none text-center">
                     <a href="https://webpixels.io/themes/quick-website-ui-kit" class="btn btn-block btn-sm btn-warning">See more details</a>
@@ -125,6 +137,24 @@
             </div>
         </div>
     </nav>
+    <div class="modal fade" id="cart_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel">My Cart</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div id="model_cart_data">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Order Place</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Main content -->
     <section class="slice" style="padding-top: 0; padding-bottom: 0;">
         <!-- <div class="container"> -->
@@ -328,6 +358,7 @@
             </div>
         </div>
     </footer>
+   
     <!-- Core JS  -->
     <script src="assets/libs/jquery/dist/jquery.min.js"></script>
     <script src="assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -341,6 +372,23 @@
             'width': '1em',
             'height': '1em'
         })
+    </script>
+    <script>
+        function feelCart_data(){
+
+            $.ajax(
+            {
+                url: "/get_to_cart",
+                type: 'GET',
+                success: function (response){
+                    if(response.status==0){
+                        $("#model_cart_data").empty().html('<p>Cart is empty.</p>');
+                    }else{
+                        $("#model_cart_data").empty().html(response);
+                    }					
+                }
+            });
+            }   
     </script>
 </body>
 

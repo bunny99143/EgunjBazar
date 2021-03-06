@@ -54,13 +54,23 @@
                         <a class="nav-link" href="docs/index.html">About Us</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="docs/index.html">Contact Us</a>
+                        <a class="nav-link" href="{{ url('/contact_us') }}">Contact Us</a>
                     </li>
                 </ul>
                 <!-- Button -->
-                <a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="{{ route('login') }}">
-                    Login - Sign Up
-                </a>
+				@isset (auth()->user()->id)
+				<a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" data-toggle="modal" data-target="#cart_modal" type="button"  href="#" onclick="return feelCart_data();">
+					My Carts
+					<span class="badge notification-active" id="cart_items">{{ \App\Cart::where('user_id',auth()->user()->id)->count() }}</span>
+				</a>
+				<a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="{{ url('login')}}">
+					My Orders
+				</a>
+				@else
+				<a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="{{ url('login')}}">
+					Login - Sign Up
+				</a>
+				@endisset
                 <!-- Mobile button -->
                 <div class="d-lg-none text-center">
                     <a href="https://webpixels.io/themes/quick-website-ui-kit" class="btn btn-block btn-sm btn-warning">See more details</a>
@@ -99,21 +109,31 @@
 									<h4 class="mb-20 pt-20">{{ $product->product_name }}</h4>
 									<p>{{ $product->product_desc }}</p>
 									<div class="price">
-										<ins> {{ $product->product_price }}</ins>
-									</div>
-									<div class="mx-w-150">
-										<div class="form-group">
-											<label class="text-blue">Tons</label>
-											<input id="demo3_22" type="text" value="1" name="demo3_22">
-										</div>
+										Price  : <ins> {{ $product->product_price }}</ins>
 									</div>
 									<div class="row">
-										<div class="col-md-6 col-6">
-											<a href="#" class="btn btn-primary btn-block">Add To Cart</a>
+										<div class="col-md-4 col-4">
+											<input id="demo3_22" class="col-4" type="text" value="1" min="1" name="demo3_22">
 										</div>
 										<div class="col-md-6 col-6">
+											<select class="form-control col-6" id="for_qout" disabled>
+												{{-- <option value="kg">K.G</option> --}}
+												<option value="tone">Tone</option>
+											<select>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-md-6 col-6">
+											@isset (auth()->user()->id)
+											<a href="javascript:;" onclick="return add_cart_deta();" class="btn btn-primary btn-block" id="add_cart_deta">Add To Cart</a>
+											@else
+											<a href="{{url('add_cart_login')}}" class="btn btn-primary btn-block" >Add To Cart</a>
+											@endisset
+										</div>
+										{{-- <div class="col-md-6 col-6">
 											<a href="#" class="btn btn-outline-primary btn-block">Buy Now</a>
-										</div>
+										</div> --}}
 									</div>
 								</div>
 							</div>
@@ -133,6 +153,25 @@
 				</div>
 			</div>
             </div>
+			<div class="modal fade" id="cart_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="myLargeModalLabel">My Cart</h4>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						</div>
+						<div class="modal-body">
+							<div id="model_cart_data">
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+							<button type="button" class="btn btn-primary">Order Place</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
             <script src="{{ asset('site/vendors/scripts/core.js') }}"></script>
 	<script src="{{ asset('site/vendors/scripts/script.min.js') }}"></script>
 	<script src="{{ asset('site/vendors/scripts/process.js') }}"></script>
@@ -141,31 +180,56 @@
 	<!-- bootstrap-touchspin js -->
 	<script src="{{ asset('site/src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js') }}"></script>
 	<script>
+		function feelCart_data(){
+
+			$.ajax(
+			{
+				url: "/get_to_cart",
+				type: 'GET',
+				success: function (response){
+					if(response.status==0){
+						$("#model_cart_data").empty().html('<p>Cart is empty.</p>');
+					}else{
+						$("#model_cart_data").empty().html(response);
+					}					
+				}
+			});
+
+			
+		}
+
 		jQuery(document).ready(function() {
-		// 	jQuery('.product-slider').slick({
-		// 		slidesToShow: 1,
-		// 		slidesToScroll: 1,
-		// 		arrows: true,
-		// 		infinite: true,
-		// 		speed: 1000,
-		// 		fade: true,
-		// 		asNavFor: '.product-slider-nav'
-		// 	});
-		// 	jQuery('.product-slider-nav').slick({
-		// 		slidesToShow: 3,
-		// 		slidesToScroll: 1,
-		// 		asNavFor: '.product-slider',
-		// 		dots: false,
-		// 		infinite: true,
-		// 		arrows: false,
-		// 		speed: 1000,
-		// 		centerMode: true,
-		// 		focusOnSelect: true
-		// 	});
+		
 			$("input[name='demo3_22']").TouchSpin({
-				initval: 1
+				initval: 1,
+				min:1,
 			});
 		});
+		// $("#add_cart_deta").click(function() {
+			function add_cart_deta(){
+				var que=$("#demo3_22").val();
+				var for_qout=$("#for_qout").val();
+
+				$.ajax(
+				{
+					url: "/add_to_cart",
+					type: 'GET',
+					data: {
+						"que": que,
+						"for_qout": for_qout,
+						"product_id": {{$id}},
+						"_token": "{{ csrf_token() }}",
+					},
+					success: function (response){
+						// $('#'+row_id).remove();
+						$('#cart_items').empty().html('1');
+						// $('#bnum-error-p').html("Number is unblocked.");
+						// $("#bnum-error-div").slideDown(300).delay(3000).slideUp(300);
+
+					}
+				});
+			}
+		// });
 	</script>
 </body>
 </html>
