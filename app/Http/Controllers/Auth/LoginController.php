@@ -43,18 +43,19 @@ class LoginController extends Controller
 
     public function login(Request $request){
         $input = $request->all();
-// dd($input);
+
         $credentials = $request->except(['_token']);
 
         $user = User::where('email', '=', $input['email'])->where('role', '=', $input['role'])->first();
 
-
-            if (auth()->attempt($credentials)) {
-                return redirect()->route('home');
-            }else{
-                 return redirect()->route('login')
-                     ->with('error','Invalid user id or password.');
-            }
+        if (auth()->attempt($credentials)) {
+            
+            return redirect()->route('home');
+            
+        }else{
+                return redirect()->route('login')
+                    ->with('error','Invalid user id or password.');
+        }
 
     }
 }

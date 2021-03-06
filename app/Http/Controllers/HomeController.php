@@ -15,10 +15,11 @@ class HomeController extends Controller
      *
      * @return void
      */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth')->only(['index']);
+    }
+    
 
     /**
      * Show the application dashboard.
@@ -27,14 +28,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // dd(Auth::user());
-        // echo "yes i m here";
         return view('home');
     }
 
     public function welcome()
     {
-
+        
+        $user=Auth::user();
+        if($user  && $user->role==1){
+            return view('home');
+        }
         $category = Category::all();
         return view('welcome',compact(['category'=>'category'])); 
     }
@@ -47,11 +50,11 @@ class HomeController extends Controller
         return view('product',compact(['product'=>'product','category_name'])); 
     }
 
-public function product_detail($id)
-{
+    public function product_detail($id)
+    {
 
-    $product = Product::where('id',$id)->first();
-    
-    return view('product_details',compact(['product'=>'product'])); 
-}
+        $product = Product::where('id',$id)->first();
+        
+        return view('product_details',compact(['product'=>'product','id'=>'id'])); 
+    }
 }
