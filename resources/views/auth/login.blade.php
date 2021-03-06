@@ -244,6 +244,11 @@ a {
                                         {{ $message }}
                                     </span>
                                 @enderror</div>
+                                <div class="group"> <label for="rolte" class="label">Role</label> <select id="role"  class="input" name="role" placeholder="Please Select Role">
+                 <option value="0">Buyer</option>
+                 <option value="1">Supplier</option>
+
+                        </select> </div>
                             <!-- <div class="group"> <input id="check" type="checkbox" class="check" checked> <label for="check"><span class="icon"></span> Keep me Signed in</label> </div> -->
                             <div class="group"> <input type="submit" class="button" value="Sign In"> </div>
                             <div class="hr"></div>
@@ -256,6 +261,11 @@ a {
 
                         <!-- <form method="POST" action="{{ url('register') }}" > -->
                         @csrf
+                        <div class="group"> <label for="role" class="label">Role</label> <select id="role"  class="input" name="role" placeholder="Please Select Role">
+                 <option value="0">Buyer</option>
+                 <option value="1">Supplier</option>
+
+                        </select> </div>
                         <div class="group"> <label for="f_name" class="label">First Name</label> <input id="f_name" type="text" class="input" name="f_name" placeholder="Please enter first name">
                          @error('f_name')
                                     <span class="invalid-feedback" role="alert">

@@ -3,7 +3,8 @@
 <head>
 	<!-- Basic Page Info -->
 	<meta charset="utf-8">
-	<title>DeskApp - Bootstrap Admin Dashboard HTML Template</title>
+	<title>E-Ganj Bazar</title>
+
 
 	<!-- Site favicon -->
 	<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('site/vendors/images/apple-touch-icon.png') }}">
@@ -71,14 +72,16 @@
 			
 			<div class="user-info-dropdown">
 				<div class="dropdown">
-					<a class="dropdown-toggle" href="site/#" role="button" data-toggle="dropdown">
-						{{-- <span class="user-icon">
-							<img src="site/vendors/images/photo1.jpg" alt="">
-						</span> --}}
+					<a class="dropdown-toggle" role="button" data-toggle="dropdown">
+						<span class="user-icon">
+							<img src="{{asset('images/profile_image').'/'.Auth::user()->profile_image }}" alt="">
+
+						</span> 
 						<span class="user-name">{{ Auth::user()->f_name." ".Auth::user()->l_name }}</span>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-						<a class="dropdown-item" href="site/profile.html"><i class="dw dw-user1"></i> Profile</a>
+						<a class="dropdown-item" href="{{ url('profile') }}"><i class="dw dw-user1"></i> Profile</a>
+						<a class="dropdown-item" href="{{ url('changepassword') }}"><i class="dw dw-user1"></i> Change Password</a>
 						<a class="dropdown-item" href="{{ route('logout') }}"
 						onclick="event.preventDefault();
 									  document.getElementById('logout-form').submit();"><i class="dw dw-logout"></i>
@@ -188,6 +191,9 @@
 		<div class="menu-block customscroll">
 			<div class="sidebar-menu">
 				<ul id="accordion-menu">
+				@if(auth()->user()->id==1 )
+
+
 					<li class="dropdown {{ $request->segment(1) == 'category' ? 'show' : '' }}">
 						<a href="javascript:;" class="dropdown-toggle">
 							<span class="micon dw dw-house-1"></span><span class="mtext">Categories</span>
@@ -197,30 +203,19 @@
 							<li><a href="{{ url('category') }}" class="{{ $request->segment(1) == 'category' && $request->segment(2) != 'create' ? 'active' : '' }}">Show Categories</a></li>
 						</ul>
 					</li>
-					{{-- <li class="dropdown">
-						<a href="site/javascript:;" class="dropdown-toggle">
-							<span class="micon dw dw-edit2"></span><span class="mtext">Forms</span>
+					@endif
+					@if(auth()->user()->role=="supplier" )
+					<li class="dropdown {{ $request->segment(1) == 'product' ? 'show' : '' }}">
+						<a href="javascript:;" class="dropdown-toggle">
+							<span class="micon dw dw-house-1"></span><span class="mtext">Products</span>
 						</a>
 						<ul class="submenu">
-							<li><a href="site/form-basic.html">Form Basic</a></li>
-							<li><a href="site/advanced-components.html">Advanced Components</a></li>
-							<li><a href="site/form-wizard.html">Form Wizard</a></li>
-							<li><a href="site/html5-editor.html">HTML5 Editor</a></li>
-							<li><a href="site/form-pickers.html">Form Pickers</a></li>
-							<li><a href="site/image-cropper.html">Image Cropper</a></li>
-							<li><a href="site/image-dropzone.html">Image Dropzone</a></li>
+							<li class=""><a href="{{ url('/product/create') }}" class="{{ $request->segment(1) == 'product' && $request->segment(2) == 'create' ? 'active' : '' }}">Create Product</a></li>
+							<li><a href="{{ url('product') }}" class="{{ $request->segment(1) == 'product' && $request->segment(2) != 'create' ? 'active' : '' }}">Show Products</a></li>
 						</ul>
 					</li>
-					<li class="dropdown">
-						<a href="site/javascript:;" class="dropdown-toggle">
-							<span class="micon dw dw-library"></span><span class="mtext">Tables</span>
-						</a>
-						<ul class="submenu">
-							<li><a href="site/basic-table.html">Basic Tables</a></li>
-							<li><a href="site/datatable.html">DataTables</a></li>
-						</ul>
-					</li> --}}
-					
+					@endif
+
 				</ul>
 			</div>
 		</div>

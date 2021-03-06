@@ -92,7 +92,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container">
             <!-- Brand -->
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="{{ url('/') }}">
             
             <!-- E-Ganj Bazar -->
                 <img alt="Image placeholder" src="{{ asset('images/home/logo_transparent.png') }}" style="    height: auto;width: 175px;" id="navbar-logo">
@@ -105,13 +105,13 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mt-4 mt-lg-0 ml-auto">
                 <li class="nav-item ">
-                        <a class="nav-link" href="docs/index.html">Home</a>
+                        <a class="nav-link" href="{{ url('/') }}">Home</a>
                     </li>
                   <li class="nav-item ">
-                        <a class="nav-link" href="docs/index.html">About Us</a>
+                        <a class="nav-link" href="{{ url('/') }}">About Us</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="docs/index.html">Contact Us</a>
+                        <a class="nav-link" href="{{ url('/contact_us') }}">Contact Us</a>
                     </li>
                 </ul>
                 <!-- Button -->
@@ -128,7 +128,7 @@
     <!-- Main content -->
     <section class="slice" style="padding-top: 0; padding-bottom: 0;">
         <!-- <div class="container"> -->
-        <img alt="Image placeholder" src="{{ asset('images/home/main_page.jpg') }}" class="img-fluid ">
+        <img alt="Image placeholder" src="{{ asset('images/home/main_page.jpg') }}" style="width: 100%;height: 600px;">
         <!-- </div> -->
     </section>
     <section class="slice slice-lg pt-lg-6 pb-0 pb-lg-6 bg-section-secondary">
@@ -146,39 +146,23 @@
             </div>
             <!-- Card -->
             <div class="row mt-5">
+
+            @foreach ($category as $item)
+            
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body pb-5">
+                        <a href="{{ url('/products/'.$item->id) }}">
                             <div class="pt-4 pb-5">
-                                <img src="assets/img/svg/illustrations/illustration-5.svg" class="img-fluid img-center" style="height: 150px;" alt="Illustration" />
+                                <img src="{{ asset('images/category_image/')."/".$item->category_image }}" class="img-fluid img-center" style="height: 200px;" alt="Illustration" />
                             </div>
-                            <h5 class="h4 lh-130 mb-3">Grain</h5>
-                            <p class="text-muted mb-0">Quick Website UI Kit (FREE) contains components and pages that are easy to customize and change.</p>
+                            <h5 class="h4 lh-130 mb-3">{{$item->category_name}}</h5>
+                            <p class="text-muted mb-0">{{$item->category_desc}}</p>
                         </div>
+                        </a>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body pb-5">
-                            <div class="pt-4 pb-5">
-                                <img src="assets/img/svg/illustrations/illustration-6.svg" class="img-fluid img-center" style="height: 150px;" alt="Illustration" />
-                            </div>
-                            <h5 class="h4 lh-130 mb-3">Vegetables</h5>
-                            <p class="text-muted mb-0">Quick Website UI Kit (FREE) contains components and pages that are easy to customize and change.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body pb-5">
-                            <div class="pt-4 pb-5">
-                                <img src="assets/img/svg/illustrations/illustration-7.svg" class="img-fluid img-center" style="height: 150px;" alt="Illustration" />
-                            </div>
-                            <h5 class="h4 lh-130 mb-3">Fruits</h5>
-                            <p class="text-muted mb-0">Quick Website UI Kit (FREE) contains components and pages that are easy to customize and change.</p>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>

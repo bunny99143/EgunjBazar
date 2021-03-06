@@ -12,9 +12,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', 'HomeController@welcome');
+
 
 // Route::post('insertuser', 'UserController@insert');
 // insert
@@ -33,4 +35,24 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+
 Route::resource('category','CategoryController')->names('category');
+
+Route::resource('product','ProductController')->names('product');
+
+Route::get('/products/{id}', 'HomeController@products')->name('products');
+Route::get('/product-detail/{id}', 'HomeController@product_detail')->name('products-detail');
+
+// Route::get('profile','ProfileController@profile');
+// Route::post('addProfile','ProfileController@addProfile');
+
+Route::resource('profile','ProfileController')->names('profile');
+
+Route::resource('changepassword','ChangepasswordController')->names('changepassword');
+
+Route::resource('contact_us', 'ContactController')->names('contact_us');
+// Route::get('/contact_us', function () {
+//     return view('contact_us');
+// });
+
+

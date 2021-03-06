@@ -240,7 +240,24 @@ a {
                         <div class="sign-up-form">
                         <form method="POST" action="{{ url('register') }}" class="registration-form">
                         @csrf
+                        <div class="group"> <label for="f_name" class="label">First Name</label> <select id="role"  class="input" name="role" placeholder="Please Select Role">
+                 <option value="0">Admin</option>
+                 <option value="1">Supplier</option>
+                 
+
+
+                        </select> </div>
+                        <div>
+                        <label class="col-sm-12 col-md-2 col-form-label">Profile Image</label>
+		                   <div class="custom-file" style="width:32%;margin-left:15px;">
+		                     <input type="file" name="profile_image" class="custom-file-input" style="width:40%;">
+                     			{{-- {!! Form::file('profile_image', null,['class'=>'custom-file-input', 'style'=>'width:40%;']) !!} --}}
+			             <label class="custom-file-label">Choose file</label>
+		                     </div>
+                           </div>
+
                         <div class="group"> <label for="f_name" class="label">First Name</label> <input id="f_name" type="text" class="input" name="f_name" placeholder="Please enter first name"> </div>
+
                             <div class="group"> <label for="l_name" class="label">Last Name</label> <input id="l_name" type="text" class="input" name="l_name" placeholder="Please enter last name"> </div>
                             <div class="group"> <label for="email" class="label">Email</label> <input id="email" type="email" class="input" name="email" placeholder="Please enter email"> </div>
                             <div class="group"> <label for="phone_number" class="label">Phone Number</label> <input id="phone_number" type="text" class="input" name="phone_number" placeholder="Please enter phone number"> </div>
