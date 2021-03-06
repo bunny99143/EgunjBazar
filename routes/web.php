@@ -51,6 +51,13 @@ Route::resource('profile','ProfileController')->names('profile');
 Route::resource('changepassword','ChangepasswordController')->names('changepassword');
 
 Route::resource('contact_us', 'ContactController')->names('contact_us');
+
+
+
+Route::resource('orders','OrderController')->names('orders');
+
+Route::get('/add_to_cart', 'CartController@add_to_cart')->name('add_to_cart');
+Route::get('/get_to_cart', 'CartController@get_to_cart')->name('get_to_cart');
 // Route::get('/contact_us', function () {
 //     return view('contact_us');
 // });
