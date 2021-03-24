@@ -113,7 +113,7 @@
 						</ul>
 					</li>
 					@endif
-					@if(auth()->user()->role=="supplier" )
+					@if(auth()->user()->role=="1" )
 					<li class="dropdown {{ $request->segment(1) == 'product' ? 'show' : '' }}">
 						<a href="javascript:;" class="dropdown-toggle">
 							<span class="micon dw dw-house-1"></span><span class="mtext">Products</span>

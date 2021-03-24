@@ -128,7 +128,7 @@
 											@isset (auth()->user()->id)
 											<a href="javascript:;" onclick="return add_cart_deta();" class="btn btn-primary btn-block" id="add_cart_deta">Add To Cart</a>
 											@else
-											<a href="{{url('add_cart_login')}}" class="btn btn-primary btn-block" >Add To Cart</a>
+											<a href="{{url('login')}}" class="btn btn-primary btn-block" >Add To Cart</a>
 											@endisset
 										</div>
 										{{-- <div class="col-md-6 col-6">
