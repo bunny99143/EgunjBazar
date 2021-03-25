@@ -17,8 +17,10 @@
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="{{ asset('site/vendors/styles/core.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('site/vendors/styles/icon-font.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('site/src/plugins/sweetalert2/sweetalert2.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('site/vendors/styles/style.css') }}">
 
+	
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
 	<script>
@@ -166,7 +168,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-							<button type="button" class="btn btn-primary">Order Place</button>
+							<button type="button" class="btn btn-primary" onclick="return place_order();">Order Place</button>
 						</div>
 					</div>
 				</div>
@@ -179,6 +181,10 @@
     <script src="{{ asset('site/src/plugins/slick/slick.min.js') }}"></script>
 	<!-- bootstrap-touchspin js -->
 	<script src="{{ asset('site/src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js') }}"></script>
+
+	<script src="{{ asset('site/src/plugins/sweetalert2/sweetalert2.all.js') }}"></script>
+	<script src="{{ asset('site/src/plugins/sweetalert2/sweet-alert.init.js') }}"></script>
+
 	<script>
 		function feelCart_data(){
 
@@ -221,14 +227,42 @@
 						"_token": "{{ csrf_token() }}",
 					},
 					success: function (response){
+						// $("div").scrollTop()
 						// $('#'+row_id).remove();
 						$('#cart_items').empty().html('1');
+						$("html, body").animate({ scrollTop: 0 }, "slow");
+  						return false;
 						// $('#bnum-error-p').html("Number is unblocked.");
 						// $("#bnum-error-div").slideDown(300).delay(3000).slideUp(300);
 
 					}
 				});
 			}
+
+			function place_order(){
+				window.location.replace("order_place");
+			}
+				// $.ajax(
+				// {
+				// 	url: "/place_order",
+				// 	type: 'GET',
+				// 	data: {
+				// 		"_token": "{{ csrf_token() }}",
+				// 	},
+				// 	success: function (response){
+				// 		$("#cart_modal").modal('hide');
+				// 		$('#cart_items').empty();
+				// 			swal({
+				// 				title: 'Order Place Successfully.',
+				// 				width: 600,
+				// 				padding: 100,
+				// 				background: '#fff url(vendors/images/img1.jpg)'
+				// 			})
+
+  				// 		return false;
+				// 	}
+				// });
+			// }
 		// });
 	</script>
 </body>

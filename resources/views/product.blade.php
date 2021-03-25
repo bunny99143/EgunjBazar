@@ -102,7 +102,7 @@
 									<div class="product-caption">
 										<h4><a href="#">{{$item->product_name}}</a></h4>
 										<div class="price">
-											<ins>{{$item->category_id}}</ins>
+											Price  : <ins>{{$item->product_price}}</ins>
 										</div>
 										<!-- <a href="#" class="btn btn-outline-primary">Read More</a> -->
 									</div>
