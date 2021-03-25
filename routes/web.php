@@ -58,6 +58,10 @@ Route::resource('orders','OrderController')->names('orders');
 
 Route::get('/add_to_cart', 'CartController@add_to_cart')->name('add_to_cart');
 Route::get('/get_to_cart', 'CartController@get_to_cart')->name('get_to_cart');
+Route::get('/place_order', 'OrderController@place_order')->name('place_order');
+
+Route::get('/order_place', 'OrderController@order_place')->name('order_place');
+
 // Route::get('/contact_us', function () {
 //     return view('contact_us');
 // });
