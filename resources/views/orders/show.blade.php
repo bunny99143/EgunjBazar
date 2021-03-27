@@ -4,14 +4,12 @@
 		<div class="pd-ltr-20">
 		
 			<div class="pd-20 card-box mb-30">
-				<h2 class="h4 pd-20">Create Product</h2>
+				<h2 class="h4 pd-20">Order Details</h2>
 <hr>
 
-{{ Form::open(array('url' => route('product.store'), 'method' => 'POST', 'files' => true ,  'class'=>'col-md-12')) }}
                 
-@include('product.form')
+@include('orders.form')
 
-{{ Form::close() }}
 
 							
 			</div>

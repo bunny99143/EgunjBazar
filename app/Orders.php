@@ -8,6 +8,6 @@ class Orders extends Model
 {
     protected $table = 'orders';
     protected $fillable = [
-        'user_id','product_id','quantity','price','total_price'
+        'user_id','product_id','quantity','price','total_price','order_status','order_address'
     ];
 }

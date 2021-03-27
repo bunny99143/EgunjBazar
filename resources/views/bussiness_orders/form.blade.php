@@ -1,3 +1,5 @@
+{{ Form::model($orders, array('url' => route('myorders.update',$orders->id), 'method' => 'PUT', 'files' => true , 'class'=>'col-md-12')) }}
+    
 @csrf
 {{-- <div class="form-group row">
 		<label class="col-sm-12 col-md-2 col-form-label">Product Category</label>
@@ -12,6 +14,31 @@
 			{!! Form::text('product_name', $orders->id,['placeholder'=>'Product Name', 'style'=>'width:40%;','class'=>'form-control','required','disabled']) !!}
 		</div>
 	</div>
+	<div class="form-group row">
+		<label class="col-sm-12 col-md-2 col-form-label">Customer Name</label>
+		<div class="col-sm-12 col-md-10">
+			{!! Form::text('product_name', $orders->f_name." ".$orders->l_name,['placeholder'=>'Product Name', 'style'=>'width:40%;','class'=>'form-control','required','disabled']) !!}
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-12 col-md-2 col-form-label">Customer Email</label>
+		<div class="col-sm-12 col-md-10">
+			{!! Form::text('product_name', $orders->email,['placeholder'=>'Product Name', 'style'=>'width:40%;','class'=>'form-control','required','disabled']) !!}
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-12 col-md-2 col-form-label">Customer PhoneNumber</label>
+		<div class="col-sm-12 col-md-10">
+			{!! Form::text('product_name', $orders->phone_number,['placeholder'=>'Product Name', 'style'=>'width:40%;','class'=>'form-control','required','disabled']) !!}
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-sm-12 col-md-2 col-form-label">Customer Address</label>
+		<div class="col-sm-12 col-md-10">
+			<textarea style="width:40%;" class="form-control" disabled>{{$orders->address}}</textarea>
+		</div>
+	</div>
+
 	<div class="form-group row">
 		<label class="col-sm-12 col-md-2 col-form-label">Order Date	</label>
 		<div class="col-sm-12 col-md-10">
@@ -51,17 +78,20 @@
 		<label class="col-sm-12 col-md-2 col-form-label">Order Status</label>
 		<div class="col-sm-12 col-md-10">
 			
-			@if ($orders->order_status=="1")
-			{!! Form::text('product_name', 'Delivered',['placeholder'=>'Product Name', 'style'=>'width:40%;','class'=>'form-control','required','disabled']) !!}
-			@else
-			{!! Form::text('product_name', 'Pending',['placeholder'=>'Product Name', 'style'=>'width:40%;','class'=>'form-control','required','disabled']) !!}
+			@if($orders->order_status==1)
+			{!! Form::select('order_status',['0'=>'Pending', '1'=>'Delivered'],$orders->order_status,['class'=>'form-control','required','style'=>'width:40%;','disabled']); !!}
+			@else 
+			{!! Form::select('order_status',['0'=>'Pending', '1'=>'Delivered'],$orders->order_status,['class'=>'form-control','required','style'=>'width:40%;']); !!}
 			@endif
+			
 				
 		</div>
 	</div>
-	<div class="form-group row">
-		<label class="col-sm-12 col-md-2 col-form-label">Address</label>
-		<div class="col-sm-12 col-md-10">
-			<textarea style="width:40%;" class="form-control" disabled> {{$orders->address}}</textarea>
-		</div>
+
+	<div class="form-group">
+		<button type="submit" class="btn btn-primary"> Submit</button>
 	</div>
+	
+{{ Form::close() }}
+
+	

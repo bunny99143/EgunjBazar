@@ -34,7 +34,7 @@
 							 <td>₹ {{$item->price  }}</td>
 							<td ><b>{{$item->quantity  }}</b> Tone</td>
 							<td>
-							<a href="{{ url('/orders/'.$item->id) }}" type="button"> View</a>						
+							<a href="{{ url('/myorders/'.$item->id) }}" type="button"> View</a>						
 							</td>
 						</tr>
 						@empty

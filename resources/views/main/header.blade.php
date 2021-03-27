@@ -112,6 +112,7 @@
 							<li><a href="{{ url('category') }}" class="{{ $request->segment(1) == 'category' && $request->segment(2) != 'create' ? 'active' : '' }}">Show Categories</a></li>
 						</ul>
 					</li>
+
 					@endif
 					@if(auth()->user()->role=="1" )
 					<li class="dropdown {{ $request->segment(1) == 'product' ? 'show' : '' }}">
@@ -121,6 +122,16 @@
 						<ul class="submenu">
 							<li class=""><a href="{{ url('/product/create') }}" class="{{ $request->segment(1) == 'product' && $request->segment(2) == 'create' ? 'active' : '' }}">Create Product</a></li>
 							<li><a href="{{ url('product') }}" class="{{ $request->segment(1) == 'product' && $request->segment(2) != 'create' ? 'active' : '' }}">Show Products</a></li>
+						</ul>
+					</li>
+
+
+					<li class="dropdown {{ $request->segment(1) == 'myorders' ? 'show' : '' }}">
+						<a href="javascript:;" class="dropdown-toggle">
+							<span class="micon dw dw-house-1"></span><span class="mtext">My Order</span>
+						</a>
+						<ul class="submenu">
+							<li class=""><a href="{{ url('/myorders') }}" class="{{ $request->segment(1) == 'myorders' ? 'active' : '' }}">Order list</a></li>
 						</ul>
 					</li>
 					@else

@@ -37,6 +37,12 @@
 			{!! Form::text('phone_number', null,['placeholder'=>'phone_number', 'style'=>'width:40%;','class'=>'form-control','required']) !!}
 		</div>
 	</div>
+	<div class="form-group row">
+		<label class="col-sm-12 col-md-2 col-form-label">Address</label>
+		<div class="col-sm-12 col-md-10">
+			{!! Form::textarea('address', null,['placeholder'=>'address', 'style'=>'width:40%;','class'=>'form-control','required']) !!}
+		</div>
+	</div>
 	<div class="form-group">
 		<button type="submit" class="btn btn-primary"> Submit</button>
 	</div>

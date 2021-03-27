@@ -39,6 +39,7 @@ class ProfileController extends Controller
             $user->l_name= $input['l_name'];
             $user->email = $input['email'];
             $user->phone_number = $input['phone_number'];
+            $user->address = $input['address'];
             $user->save();
 
             return redirect('/home')->with('success','Profile updated successfully.');

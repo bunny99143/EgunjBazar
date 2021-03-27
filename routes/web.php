@@ -62,6 +62,8 @@ Route::get('/place_order', 'OrderController@place_order')->name('place_order');
 
 Route::get('/order_place', 'OrderController@order_place')->name('order_place');
 
+Route::resource('myorders','BussinessOrderController')->names('myorders');
+
 // Route::get('/contact_us', function () {
 //     return view('contact_us');
 // });
