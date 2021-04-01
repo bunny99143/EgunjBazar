@@ -124,7 +124,7 @@ input[type=submit]:hover {
 					My Carts
 					<span class="badge notification-active" id="cart_items">{{ \App\Cart::where('user_id',auth()->user()->id)->count() }}</span>
 				</a>
-				<a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="{{ url('login')}}">
+				<a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="{{ url('orders')}}">
 					My Orders
 				</a>
 				@else
@@ -205,7 +205,7 @@ input[type=submit]:hover {
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Order Place</button>
+                    <button type="button" class="btn btn-primary" onclick="return place_order();">Order Place</button>
                   </div>
                 </div>
               </div>
@@ -217,6 +217,9 @@ input[type=submit]:hover {
     <script src="{{ asset('site/src/plugins/slick/slick.min.js') }}"></script>
 	<!-- bootstrap-touchspin js -->
 	<script src="{{ asset('site/src/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js') }}"></script>
+
+	<script src="{{ asset('site/src/plugins/sweetalert2/sweetalert2.all.js') }}"></script>
+	<script src="{{ asset('site/src/plugins/sweetalert2/sweet-alert.init.js') }}"></script>
   <script>
     function feelCart_data(){
 
@@ -232,7 +235,29 @@ input[type=submit]:hover {
                 }					
             }
         });
-        }   
+        }  
+        function place_order(){
+				$.ajax(
+				{
+					url: "/place_order",
+					type: 'GET',
+					data: {
+						"_token": "{{ csrf_token() }}",
+					},
+					success: function (response){
+						$("#cart_modal").modal('hide');
+						$('#cart_items').empty();
+							swal({
+								title: 'Order Place Successfully.',
+								width: 600,
+								padding: 100,
+								background: '#fff url(vendors/images/img1.jpg)'
+							})
+
+  						return false;
+					}
+				});
+			} 
 </script>
 	<script>
      

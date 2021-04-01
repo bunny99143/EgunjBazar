@@ -65,7 +65,7 @@
 					My Carts
 					<span class="badge notification-active" id="cart_items">{{ \App\Cart::where('user_id',auth()->user()->id)->count() }}</span>
 				</a>
-				<a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="{{ url('login')}}">
+				<a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="{{ url('orders')}}">
 					My Orders
 				</a>
 				@else
@@ -240,29 +240,27 @@
 			}
 
 			function place_order(){
-				window.location.replace("order_place");
-			}
-				// $.ajax(
-				// {
-				// 	url: "/place_order",
-				// 	type: 'GET',
-				// 	data: {
-				// 		"_token": "{{ csrf_token() }}",
-				// 	},
-				// 	success: function (response){
-				// 		$("#cart_modal").modal('hide');
-				// 		$('#cart_items').empty();
-				// 			swal({
-				// 				title: 'Order Place Successfully.',
-				// 				width: 600,
-				// 				padding: 100,
-				// 				background: '#fff url(vendors/images/img1.jpg)'
-				// 			})
+				$.ajax(
+				{
+					url: "/place_order",
+					type: 'GET',
+					data: {
+						"_token": "{{ csrf_token() }}",
+					},
+					success: function (response){
+						$("#cart_modal").modal('hide');
+						$('#cart_items').empty();
+							swal({
+								title: 'Order Place Successfully.',
+								width: 600,
+								padding: 100,
+								background: '#fff url(vendors/images/img1.jpg)'
+							})
 
-  				// 		return false;
-				// 	}
-				// });
-			// }
+  						return false;
+					}
+				});
+			}
 		// });
 	</script>
 </body>
