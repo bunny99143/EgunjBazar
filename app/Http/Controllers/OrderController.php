@@ -6,12 +6,17 @@ use Illuminate\Http\Request;
 use App\Orders;
 use App\Cart;
 use App\Product;
+use App\Events\OrderPlaceEvent;
 use Auth;
 
 class OrderController extends Controller
 {
     public function index()
     {
+        $order_data = Orders::with(['customer','product'])->where('id','10')->first();
+          
+            event(new OrderPlaceEvent($order_data));
+            die();
         $orders= Orders::leftjoin('products','products.id','orders.product_id')
                     ->leftjoin('categories','categories.id','products.category_id')
                     ->select('products.product_name','products.product_image','categories.category_name','orders.*')
@@ -40,7 +45,7 @@ class OrderController extends Controller
     public function order_place(Request $request)
     {
         
-        $cart_data=Cart::where('user_id',auth()->user()->id)->first();
+            $cart_data=Cart::where('user_id',auth()->user()->id)->first();
             $order_array=[
                 'user_id'=>$cart_data->user_id,
                 'product_id'=>$cart_data->product_id,
@@ -49,12 +54,14 @@ class OrderController extends Controller
                 'total_price'=>$cart_data->total_price,
             ];
 
-            Orders::create($order_array);
+            $order_place = Orders::create($order_array);
+
+
+            $order_data = Orders::with(['customer','product'])->where('id',$order_place->id)->first();
+          
+            event(new OrderPlaceEvent($order_data));
 
             return response()->json(['status'=>'1']);
-        // }
-        // return view('order_form');
-        // return view('order_form',compact(['cart_data'=>'cart_data','product_data'=>'product_data']));
     }
 
     public function place_order(Request $request)
