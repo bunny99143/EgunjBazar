@@ -13,10 +13,6 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $order_data = Orders::with(['customer','product'])->where('id','10')->first();
-          
-            event(new OrderPlaceEvent($order_data));
-            die();
         $orders= Orders::leftjoin('products','products.id','orders.product_id')
                     ->leftjoin('categories','categories.id','products.category_id')
                     ->select('products.product_name','products.product_image','categories.category_name','orders.*')
