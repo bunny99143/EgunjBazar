@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
+    
+Route::get('stripe', 'HomeController@stripe');
+Route::post('stripe', 'HomeController@stripePost')->name('stripe.post');
+
 Route::get('/', 'HomeController@welcome');
 
 
@@ -63,6 +68,8 @@ Route::get('/place_order', 'OrderController@place_order')->name('place_order');
 Route::get('/order_place', 'OrderController@order_place')->name('order_place');
 
 Route::resource('myorders','BussinessOrderController')->names('myorders');
+
+Route::get('/remove_cart', 'CartController@remove_cart')->name('remove_cart');
 
 // Route::get('/contact_us', function () {
 //     return view('contact_us');
