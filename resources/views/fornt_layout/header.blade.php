@@ -20,17 +20,10 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('site/vendors/styles/style.css') }}">
 
 	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-
-		gtag('config', 'UA-119386393-1');
-	</script>
+	
 </head>
 <body>
-	
+	<div class="loader_div" id="page_loder" style=" background: rgba(0,0,0,0.5);position: fixed;top: 0;bottom: 0;left: 0;right: 0;z-index: 9999;text-align: center;"><img src="https://flevix.com/wp-content/uploads/2020/01/Preloader.gif" style="width: 250px;margin: auto;position: absolute;top: 50%;transform: translate(0,-50%);left: 0;right: 0;"></div>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container">
@@ -58,9 +51,12 @@
                     </li>
                 </ul>
                 @isset (auth()->user()->id)
-				<a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" data-toggle="modal" data-target="#cart_modal" type="button"  href="#" onclick="return feelCart_data();">
+				@php
+					$cart_count= \App\Cart::where('user_id',auth()->user()->id)->count();
+				@endphp
+				<a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" data-toggle="modal" data-target="#cart_modal" type="button"  href="javascript:;" @if($cart_count > 0) onclick="return feelCart_data();" @endif>
 					My Carts
-					<span class="badge notification-active" id="cart_items">{{ \App\Cart::where('user_id',auth()->user()->id)->count() }}</span>
+					<span class="badge notification-active" id="cart_items">{{ $cart_count }}</span>
 				</a>
 				<a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="{{ url('orders')}}">
 					My Orders

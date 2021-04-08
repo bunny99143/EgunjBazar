@@ -88,6 +88,13 @@
 		</div>
 	</div>
 
+	<div class="form-group row">
+		<label class="col-sm-12 col-md-2 col-form-label">Transaction Id</label>
+		<div class="col-sm-12 col-md-10">
+			{!! Form::text('product_name', isset($orders->transaction_id)?$orders->transaction_id:'COD',['placeholder'=>'Transaction Id', 'style'=>'width:40%;','class'=>'form-control','required','disabled']) !!}
+		</div>
+	</div>
+
 	<div class="form-group">
 		<button type="submit" class="btn btn-primary"> Submit</button>
 	</div>

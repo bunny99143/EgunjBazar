@@ -10,5 +10,5 @@
     <div class="col 3">{{ $product_data->product_name}} </div>
     <div class="col 2">{{$cart_data->quantity }} Tone</div>*
     <div class="col 2">₹{{$cart_data->price}}</div>=								
-    <div class="col 3">₹{{$cart_data->total_price}}</div>
+    <div class="col 3">₹<span id="cart_total_price">{{$cart_data->total_price}}</span></div>
 </div>

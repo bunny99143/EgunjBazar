@@ -10,9 +10,13 @@
 						<tr>
 							<th class="table-plus datatable-nosort" >#ID</th>
 							<th  class="datatable-nosort" >Order Date</th>
+							@if(auth()->user()->id==1)
+							<th  class="datatable-nosort" >Suppliyer Name</th>
+							@endif
 							<th  class="datatable-nosort" >Product Name</th>
 							<th class="table-plus datatable-nosort" >Product Image</th>
 							<th class="table-plus datatable-nosort" >Product Price</th>						
+							<th  class="datatable-nosort" >Buyer Name</th>
 							<th class="table-plus datatable-nosort" >Quantity</th>
 							<th class="datatable-nosort">Action</th>
 						</tr>
@@ -27,11 +31,18 @@
 								{{$item->id  }}
 							</td>
 							<td>{{ date('d-m-Y',strtotime($item->created_at) ) }}</td>
+							@if(auth()->user()->id==1)
+							<td>{{$item->b_first_name." ".$item->b_last_name  }}</td>
+							@endif
 							<td>{{$item->product_name  }}</td>
 							<td class="table-plus">
 								<img src="{{ asset('images/product_image/')."/".$item->product_image }}" width="150" height="100" alt="">
 							</td>
 							 <td>₹ {{$item->price  }}</td>
+							 
+							 @php $user_id_order=\App\User::find($item->user_id); @endphp
+							 <td> {{ $user_id_order->f_name." ".$user_id_order->l_name }} </td>
+							 
 							<td ><b>{{$item->quantity  }}</b> Tone</td>
 							<td>
 							<a href="{{ url('/orders/'.$item->id) }}" type="button"> View</a>						

@@ -90,10 +90,9 @@ function add_cart_deta(){
 					// $('#'+row_id).remove();
 					$('#cart_items').empty().html('1');
 					$("html, body").animate({ scrollTop: 0 }, "slow");
-					return false;
-					// $('#bnum-error-p').html("Number is unblocked.");
-					// $("#bnum-error-div").slideDown(300).delay(3000).slideUp(300);
-
+					feelCart_data();
+					$('#paymnet_amount').val(response.cart.total_price);
+					// return false;
 				}
 			});
 		}
