@@ -14,4 +14,9 @@ class Cart extends Model
     protected $hidden=[
         'created_at','updated_at'
     ];
+
+    public function customer(){
+        return $this->hasOne('App\User','id','user_id');
+    }
+    
 }

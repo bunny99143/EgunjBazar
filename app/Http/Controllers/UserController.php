@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Events\UserRegister;
 
 class UserController extends Controller
 {
@@ -26,8 +27,11 @@ class UserController extends Controller
             'phone_number'=>$request->phone_number,
             'password'=>$request->password,
         ];        
-        User::create($insert);
-        
+        $user=User::create($insert);
+        $user_data=User::find($user->id);
+
+        event(new UserRegister($user_data));
+
         return redirect('/login')->with('success','Register successfully.');
         
     }

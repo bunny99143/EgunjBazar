@@ -22,7 +22,8 @@ class CartController extends Controller
         $cart->total_price=($product_data->product_price*$request->que);
         $cart->save();
         
-        return $request->all();
+        
+        return response()->json(['status'=>'0','cart'=>$cart]);    
      
     }
 
@@ -30,8 +31,10 @@ class CartController extends Controller
     {
         
         $cart_data=Cart::where('user_id',auth()->user()->id)->first();
-
-        $product_data=Product::find($cart_data->product_id);
+        $product_data=[];
+        if($cart_data){
+            $product_data=Product::find($cart_data->product_id);
+        }        
         
         if($cart_data){            
             return view('cart_data',compact(['cart_data'=>'cart_data','product_data'=>'product_data']));
@@ -40,6 +43,12 @@ class CartController extends Controller
 
         
      
+    }
+
+    public function remove_cart(Request $request)
+    {        
+        $cart_data=Cart::where('user_id',auth()->user()->id)->delete();
+        return response()->json(['status'=>'0']);    
     }
 
 }
